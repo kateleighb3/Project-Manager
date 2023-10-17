@@ -10,35 +10,63 @@ function displayTime() { // function to display the date and time right now
     timeDisplayEl.text(rightNow);// showing the date and time (rightNow) as text in the timeDisplayEl variable
 };
 
-function storeProjectLocal () {
-    //get the values form the form inputs
-    const projectName = projectNameInputEl.val();
-    const projectType = projectTypeInputEl.val();
-    const projectDueDate = projectDateInputEl.val();
- 
-    // create an objec to store the project data  
-    const projectData = {
-        name: projectName,
-        type: projectType,
-        dueDate: projectDueDate
+    let projectsArray = localStorage.getItem('projects') ? JSON.parse(localStorage.getItem('projects')) : [];
+
+    
+    function displayProjects() {
+        //clear existing projects
+
+        projectDisplayEl.empty();
+
+        // Loop through the projectsArray and display each project
+        for (let project of projectsArray) {
+            const displayString = `
+                <tr>
+                    <td>${project.name}</td>
+                    <td>${project.type}</td>
+                    <td>${project.dueDate}</td>
+                    <td>X</td>
+                </tr>
+            `;
+            projectDisplayEl.append(displayString);
+        }
+    }
+
+    function addProject (event){
+        event.preventDefault();
+
+        //Get the input values
+        const projectName = projectNameInputEl.val();
+        const projectType = projectTypeInputEl.val();
+        const projectDueDate = projectDateInputEl.val();
+
+    // Create a project object
+        const project = {
+            name: projectName,
+            type: projectType,
+            dueDate: projectDueDate
     };
 
-    //convert the project data to a JSON string and store it in local storage
-    localStorage.setItem('project', JSON.stringify(projectData));
-};
+    //Add the project (object) to the array
+    projectsArray.push(project);
 
-function displayStoredProjects () {
-    let projectInfo = localStorage.getItem('project');
-    // document.getElementById('project-display').innerHTML = JSON.parse(projectInfo);
-    
-};
+    // Update localStorage
+    localStorage.setItem('projects', JSON.stringify(projectsArray));
 
- // let project = document.getElementById("project-form")
-    // localStorage.setItem('project', project.value );
+    // Display the updated projects
+    displayProjects();
 
-// on clicking "add project" - project is saved to local storage
-// then saved project from local storage is displayed in table
-displayStoredProjects();
+    // Clear input values
+    projectNameInputEl.val('');
+    projectTypeInputEl.val('');
+    projectDateInputEl.val('');
+    }
+
+    projectFormEl.on('submit', addProject);
+
+    displayProjects();
+
+
 
 displayTime(); // calling the function to display the current time
 setInterval(displayTime, 1000); // calling setInterval method to show the current time (displayTime) in 1 second intervals.
