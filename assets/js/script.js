@@ -62,7 +62,17 @@ function displayTime() { // function to display the date and time right now
     projectDateInputEl.val('');
     }
 
+    function deleteProjects() {
+        // Clear localStorage and the display
+        localStorage.removeItem('projects');
+        projectsArray.length = 0;  // Empty the array
+        projectDisplayEl.empty();  // Clear the display
+    }
+
     projectFormEl.on('submit', addProject);
+    // Add a button click event to delete projects
+    $('#delete-projects').on('click', deleteProjects);
+
 
     displayProjects();
 
