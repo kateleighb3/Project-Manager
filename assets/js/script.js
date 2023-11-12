@@ -18,16 +18,18 @@ function displayTime() { // function to display the date and time right now
 
         projectDisplayEl.empty();
 
-        // Loop through the projectsArray and display each project
+        // Loop through the projectsArray and display each project and the correct highlight color based on due date
         for (let project of projectsArray) {
             const today = dayjs(); // get current date
             const dueDate = dayjs(project.dueDate);
+            // Format the due date to the desired format (MM/DD/YYYY)
+            const formattedDueDate = dueDate.format('MM/DD/YYYY');
             const stylingClass = dueDate.isSame(today, 'day') ? 'due-today' : (dueDate.isBefore(today, 'day') ? 'past-due' : '');
             const displayString = `
                 <tr class = "${stylingClass}">
                     <td>${project.name}</td>
                     <td>${project.type}</td>
-                    <td>${project.dueDate}</td>
+                    <td>${formattedDueDate}</td>
                     <td><button class="btn btn-danger btn-delete" data-project-index="${projectsArray.indexOf(project)}">X</button></td>
                 </tr>
             `;
