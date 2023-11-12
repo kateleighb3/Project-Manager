@@ -1,6 +1,8 @@
 # Project-Manager
 
 The Project Manager is a simple web application that allows users to manage and track their projects. It provides a user-friendly interface to add new projects, display existing projects, and delete projects as needed. The application also displays the current time and date.
+![Screen Shot 2023-11-12 at 12 58 27 PM](https://github.com/kateleighb3/Project-Manager/assets/126011029/0b0aaf49-257e-4d5b-a05e-f9e12444a250)
+![Screen Shot 2023-11-12 at 12 58 39 PM](https://github.com/kateleighb3/Project-Manager/assets/126011029/d4e85565-a8ee-44cf-8747-22afe2a365c5)
 
 
 ## Features
