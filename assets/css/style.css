@@ -1,11 +1,18 @@
 header {
     text-align: center;
     background-color: green;
-    border: 3px solid red;
     color: white;
 }
 
 .modal-btn {
     background-color: green;
     color: white;
+}
+
+.due-today {
+    background-color: lightyellow;
+}
+
+.past-due {
+    background-color: lightcoral;
 }

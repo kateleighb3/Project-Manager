@@ -20,12 +20,15 @@ function displayTime() { // function to display the date and time right now
 
         // Loop through the projectsArray and display each project
         for (let project of projectsArray) {
+            const today = dayjs(); // get current date
+            const dueDate = dayjs(project.dueDate);
+            const stylingClass = dueDate.isSame(today, 'day') ? 'due-today' : (dueDate.isBefore(today, 'day') ? 'past-due' : '');
             const displayString = `
-                <tr>
+                <tr class = "${stylingClass}">
                     <td>${project.name}</td>
                     <td>${project.type}</td>
                     <td>${project.dueDate}</td>
-                    <td>X</td>
+                    <td><button class="btn btn-danger btn-delete" data-project-index="${projectsArray.indexOf(project)}">X</button></td>
                 </tr>
             `;
             projectDisplayEl.append(displayString);
@@ -72,6 +75,21 @@ function displayTime() { // function to display the date and time right now
     projectFormEl.on('submit', addProject);
     // Add a button click event to delete projects
     $('#delete-projects').on('click', deleteProjects);
+
+    // Add a delegated event handler for the delete button
+projectDisplayEl.on('click', '.btn-delete', function() {
+    // Get the index of the project from the data attribute
+    const projectIndex = $(this).data('project-index');
+
+    // Remove the project from the array
+    projectsArray.splice(projectIndex, 1);
+
+    // Update localStorage
+    localStorage.setItem('projects', JSON.stringify(projectsArray));
+
+    // Display the updated projects
+    displayProjects();
+});
 
 
     displayProjects();
